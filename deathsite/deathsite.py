@@ -19,7 +19,7 @@ NAV_BUTTON_STYLE = {
     "border_radius": "4px",
     "transition": "background-color 0.3s ease",
     "_hover": {
-        "background_color": "#ffc107",
+        "background_color": "#6f42c1",  # Dark purple on hover
         "color": "#212529",
         "text_decoration": "none",  # Override link hover underline
     },
@@ -137,7 +137,7 @@ def home():
             rx.text("Latest Stream: ", color="#ffffff"),
             rx.link(
                 "Twitch Stream",
-                href=f"https://www.twitch.tv/{TWITCH_USERNAME}",
+                href=f"https://www.twitch.tv/death916/videos",
                 color="#ffffff",
                 is_external=True,
             ),
