@@ -216,32 +216,19 @@ def index():
                         rx.cond(
                             State.current_page == "Projects",
                             projects(),
-                            rx.vstack(
-                                rx.heading(
-                                    "Welcome to My Personal Site",
-                                    size="1",
-                                    color="#ffffff",
-                                ),
-                                rx.text(
-                                    "This is a personal site for my projects and streams.",
-                                    color="#ffffff",
-                                ),
-                                rx.text(f"Current time: {State.current_time}", color="#ffffff"),
-                                padding="2em",
-                                spacing="2",
-                            ),
-                        ),
-                    ),
-                ),
+                            home()  # default case
+                        )
+                    )
+                )
             ),
             width="100%",
-            flex_grow="1",  # Allow the content to grow and push the footer down
+            flex_grow="1",
         ),
         footer(),
         width="100%",
         display="flex",
         flex_direction="column",
-        min_height="100vh",  # Ensure the box takes up at least the full viewport height
+        min_height="100vh",
     )
 
 
