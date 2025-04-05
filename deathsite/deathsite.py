@@ -206,8 +206,35 @@ def blog():
         rx.vstack(
             rx.heading("Blog Page", size="3", color="#ffffff"),
             rx.text("This is the blog page content.", color="#ffffff"),
+            rx.scroll_area(
+                rx.flex(
+                    rx.markdown(
+                        "# April 05 2025"
+                        "\n\n## Starting this site\n\n"
+                        "I wanted to finally have a central place for all my doings. Figured now was the time to get a personal site going when i saw the reflex framework for python. I really didnt like always having to drop to JS or something for web"
+                        
+
+                        
+                    ),
+                    rx.text(
+                        """Legibility describes how easily individual characters can be
+                    distinguished from one another. It is described by Walter Tracy as “the
+                    quality of being decipherable and recognisable”. For instance, if a “b”
+                    and an “h”, or a “3” and an “8”, are difficult to distinguish at small
+                    sizes, this is a problem of legibility.""",
+                    ),
+                    
+                    direction="column",
+                    spacing="4",
+                ),
+    type="always",
+    scrollbars="vertical",
+    style={"height": 580},
+            ),
             padding="2em",
             spacing="1",
+
+        
         )
     )
 
