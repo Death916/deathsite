@@ -10,7 +10,7 @@ YOUTUBE_URL = "https://www.youtube.com/@916HS"
 YOUTUBE_EMBED_URL = "https://www.youtube.com/embed/D43Ks8fxoz4"
 TWITCH_CHAT_URL = f"https://www.twitch.tv/embed/{TWITCH_USERNAME}/chat?parent=localhost&muted=true"
 TWITCH_EMBED_URL = f"https://player.twitch.tv/?video=2424240989&parent=localhost&autoplay=false"
-
+GITHUB_URL = "https:://github.com/Death916"
 
 # styles
 
@@ -131,7 +131,7 @@ def home():
         ),
         rx.hstack(
             rx.vstack(
-                rx.heading("Whats New:", size="4", color="#ffffff"),
+                rx.heading("Whats New:", size="8", color="#ffffff"),
                 rx.html(
                     f"""
                     <iframe width="350" height="200" src="{YOUTUBE_EMBED_URL}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -152,12 +152,16 @@ def home():
             rx.vstack(
                 rx.heading(
                     "Links",
-                    size="4",
+                    size="8",
                     color="#ffffff",
                 ),
-                rx.text(
-                    "Check out my latest stream on Twitch!",
-                    color="#ffffff",
+                rx.link(
+                    "GitHub",
+                    href=GITHUB_URL,
+                    color="#736E77",
+                    size="4",
+                    effect="underline",
+                    is_external=True,
                 ),
                 align_items="end",
                 justify="end",
