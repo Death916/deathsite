@@ -127,27 +127,49 @@ def home():
             justify="center",
             width="100%",
         ),
-        rx.vstack(
-            rx.heading("Whats New:", size="2", color="#ffffff"),
-            rx.html(
-                f"""
-                <iframe width="350" height="200" src="{YOUTUBE_EMBED_URL}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                """
+        rx.hstack(
+            rx.vstack(
+                rx.heading("Whats New:", size="4", color="#ffffff"),
+                rx.html(
+                    f"""
+                    <iframe width="350" height="200" src="{YOUTUBE_EMBED_URL}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    """
+                ),
+                rx.text("Latest Stream: ", color="#ffffff"),
+                rx.link(
+                    "Twitch Stream",
+                    href=f"https://www.twitch.tv/death916/",
+                    color="#6f42c1",  # Purple color
+                    font_size="18px",  # Set font size to 12px
+                    hover_color="var(--accent-8)",  # Add hover color effect
+                    is_external=True,
+                ),
+                align_items="start",
+                spacing="2",
+                justify="start",
+            
             ),
-            rx.text("Latest Stream: ", color="#ffffff"),
-            rx.link(
-                "Twitch Stream",
-                href=f"https://www.twitch.tv/death916/",
-                color="#6f42c1",  # Purple color
-                font_size="18px",  # Set font size to 12px
-                hover_color="var(--accent-8)",  # Add hover color effect
-                is_external=True,
+            rx.vstack(
+                rx.heading(
+                    "Links",
+                    size="4",
+                    color="#ffffff",
+                ),
+                rx.text(
+                    "Check out my latest stream on Twitch!",
+                    color="#ffffff",
+                ),
+                align_items="end",
+                justify="end",
+                width="100%",
             ),
-            align_items="start",
-            spacing="2",
+            
         ),
+         
+        
         align_items="start",
         width="100%",
+       
     )
 
 
