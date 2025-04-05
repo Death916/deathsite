@@ -8,6 +8,8 @@ import datetime
 TWITCH_USERNAME = "Death916"
 YOUTUBE_URL = "https://www.youtube.com/@916HS"
 YOUTUBE_EMBED_URL = "https://www.youtube.com/embed/D43Ks8fxoz4"
+TWITCH_CHAT_URL = f"https://www.twitch.tv/embed/{TWITCH_USERNAME}/chat?parent=localhost&muted=true"
+TWITCH_EMBED_URL = f"https://player.twitch.tv/?video=2424240989&parent=localhost&autoplay=false"
 
 
 # styles
@@ -136,13 +138,11 @@ def home():
                     """
                 ),
                 rx.text("Latest Stream: ", color="#ffffff"),
-                rx.link(
-                    "Twitch Stream",
-                    href=f"https://www.twitch.tv/death916/",
-                    color="#6f42c1",  # Purple color
-                    font_size="18px",  # Set font size to 12px
-                    hover_color="var(--accent-8)",  # Add hover color effect
-                    is_external=True,
+                rx.html(
+                    f"""
+                    <iframe width="350" height="200" src="{TWITCH_EMBED_URL}" title="Twitch video player" frameborder="0" autoplay="false" allowfullscreen></iframe>
+
+                    """
                 ),
                 align_items="start",
                 spacing="2",
