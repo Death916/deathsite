@@ -123,8 +123,8 @@ def home():
                 align_items="center",
                 justify="center",
             ),
-            align_items="center",  # Center content horizontally
-            justify="center",  # Center content vertically
+            align_items="center",
+            justify="center",
             width="100%",
         ),
         rx.vstack(
@@ -137,14 +137,17 @@ def home():
             rx.text("Latest Stream: ", color="#ffffff"),
             rx.link(
                 "Twitch Stream",
-                href=f"https://www.twitch.tv/death916/videos",
-                color="#ffffff",
+                href=f"https://www.twitch.tv/death916/",
+                color="#6f42c1",  # Purple color
+                font_size="18px",  # Set font size to 12px
+                hover_color="var(--accent-8)",  # Add hover color effect
                 is_external=True,
             ),
-            align_items="start",  # Align content to the start (left)
+            align_items="start",
+            spacing="2",
         ),
-        align_items="start",  # Align content to the start (left)
-        width="100%",  # Take up full width
+        align_items="start",
+        width="100%",
     )
 
 
