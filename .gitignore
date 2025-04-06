@@ -10,6 +10,7 @@ build/
 dist/
 wheels/
 *.egg-info
-
+assets*
+/assets*
 # Virtual environments
 .venv

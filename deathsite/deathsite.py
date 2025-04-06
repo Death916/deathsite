@@ -10,7 +10,7 @@ YOUTUBE_URL = "https://www.youtube.com/@916HS"
 YOUTUBE_EMBED_URL = "https://www.youtube.com/embed/D43Ks8fxoz4"
 TWITCH_CHAT_URL = f"https://www.twitch.tv/embed/{TWITCH_USERNAME}/chat?parent=localhost&muted=true"
 TWITCH_EMBED_URL = f"https://player.twitch.tv/?video=2424240989&parent=localhost&autoplay=false"
-GITHUB_URL = "https:://github.com/Death916"
+GITHUB_URL = "https://github.com/Death916"
 
 # styles
 
@@ -70,15 +70,24 @@ def header() -> rx.Component:
                 navigation_button("Videos"),
                 navigation_button("Blog"),
                 navigation_button("Projects"),
-                spacing="4",  # Spacing between nav items
+                spacing="4",
                 justify="center",
                 align="center",
             ),
             width="100%",
-            bg="#212529",  # Dark background
             padding="1.5em 0",
-            border_bottom="3px solid #6f42c1",  # Dark purple accent border
-            align="center",  # Center heading and nav horizontally
+            border_bottom="3px solid #6f42c1",
+            align="center",
+            style={
+                "background": "linear-gradient(rgba(33, 37, 41, 0.7), rgba(33, 37, 41, 0.7)), url('/header.png')",
+                "backgroundSize": "cover",
+                "backgroundPosition": "center",
+                "backgroundRepeat": "no-repeat",
+                "minHeight": "200px",  # Reduced from 300px to 200px
+                "display": "flex",
+                "flexDirection": "column",
+                "justifyContent": "center",
+            },
         ),
     )
 
@@ -204,14 +213,14 @@ def projects():
 def blog():
     return page_content(
         rx.vstack(
-            rx.heading("Blog Page", size="3", color="#ffffff"),
-            rx.text("This is the blog page content.", color="#ffffff"),
+            rx.heading("Things", size="5", color="#ffffff"),
+            rx.text("Random Musings on what im working on or saw interesting", color="#ffffff"),
             rx.scroll_area(
                 rx.flex(
                     rx.markdown(
-                        "# April 05 2025"
+                         "# April 05 2025"
                         "\n\n## Starting this site\n\n"
-                        "I wanted to finally have a central place for all my doings. Figured now was the time to get a personal site going when i saw the reflex framework for python. I really didnt like always having to drop to JS or something for web"
+                        "I wanted to finally have a central place for all my doings. Figured now was the time to get a personal site going when I saw the reflex framework for python. I really didnt like always having to drop to JS or something for web"
                         
 
                         
@@ -256,7 +265,7 @@ def videos():
     )
 
 
-def index():
+def index() -> rx.Component:
     return rx.box(
         header(),
         rx.box(
@@ -288,7 +297,15 @@ def index():
     )
 
 
-app = rx.App()
+app = rx.App(
+    theme=rx.theme(
+        appearance="dark",
+        has_background=True,
+        accent_color="violet",  # Dark purple accent color
+        background_color="#212529",  # Dark background color
+        text_color="#ffffff",  # Light text color
+    )
+)
 app.add_page(
     index,
     title=State.page_title,
