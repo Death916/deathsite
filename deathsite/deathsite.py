@@ -225,13 +225,6 @@ def blog():
 
                         
                     ),
-                    rx.text(
-                        """Legibility describes how easily individual characters can be
-                    distinguished from one another. It is described by Walter Tracy as “the
-                    quality of being decipherable and recognisable”. For instance, if a “b”
-                    and an “h”, or a “3” and an “8”, are difficult to distinguish at small
-                    sizes, this is a problem of legibility.""",
-                    ),
                     
                     direction="column",
                     spacing="4",
