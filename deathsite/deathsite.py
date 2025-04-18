@@ -109,6 +109,7 @@ def footer() -> rx.Component:
     )
 
 
+@rx.page(route="/home")
 def home():
     return rx.box(
         rx.vstack(
@@ -198,7 +199,7 @@ def page_content(content):
         width="100%",
     )
 
-
+@rx.page(route="/projects")
 def projects():
     return page_content(
         rx.vstack(
@@ -209,7 +210,7 @@ def projects():
         )
     )
 
-
+@rx.page(route="/blog")
 def blog():
     return page_content(
         rx.vstack(
@@ -240,7 +241,7 @@ def blog():
         )
     )
 
-
+@rx.page(route="/videos")
 def videos():
     return page_content(
         rx.vstack(
@@ -301,6 +302,7 @@ app = rx.App(
 )
 app.add_page(
     index,
+    route="/",
     title=State.page_title,
 )
 
