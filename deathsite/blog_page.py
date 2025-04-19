@@ -14,7 +14,7 @@ def blog():
 
 Been using a new IRC client called Halloy. Its written in rust and has a very nice interface. Its pretty much my go to now.
 
-Its made me want to get my rust skills back up again and drop some contributions. Heres the link to the project: [halloy](https://github.com/squidowl/halloy)
+Its made me want to get my rust skills back up again and drop some contributions. Heres the link to the project: [Halloy](https://github.com/squidowl/halloy)
 
 # April 05 2025
 

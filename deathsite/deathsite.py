@@ -16,13 +16,14 @@ PROJECTS_DATA = [
         "title": "Death916's Site",
         "description": "This site is a personal portfolio and blog.",
         "status": "Ongoing",
-        "link": "github.com/Death916/deathsite",
+        "link": "https://github.com/Death916/deathsite",
+        
     },
     {
         "title": "Deathclock",
         "description": "Sports and weather clock and dashboard",
         "status": "Ongoing",
-        "link": "github.com/Death916/deathclock",
+        "link": "https://github.com/Death916/deathclock",
     }, 
     {
         "title": "Death916's Guild",
