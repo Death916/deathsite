@@ -9,7 +9,7 @@ TWITCH_USERNAME = "Death916"
 YOUTUBE_URL = "https://www.youtube.com/@916HS"
 YOUTUBE_EMBED_URL = "https://www.youtube.com/embed/D43Ks8fxoz4"
 TWITCH_CHAT_URL = f"https://www.twitch.tv/embed/{TWITCH_USERNAME}/chat?parent=localhost&muted=true"
-TWITCH_EMBED_URL = f"https://player.twitch.tv/?video=2424240989&parent=localhost&autoplay=false"
+TWITCH_EMBED_URL = f"https://player.twitch.tv/?channel={TWITCH_USERNAME}&parent=localhost&muted=true"
 GITHUB_URL = "https://github.com/Death916"
 PROJECTS_DATA = [
     {
@@ -161,7 +161,7 @@ def home():
                         <iframe width="350" height="200" src="{YOUTUBE_EMBED_URL}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         """
                     ),
-                    rx.text("Latest Stream: ", color="#ffffff"),
+                    rx.text("Stream: ", color="#ffffff"),
                     rx.html(
                         f"""
                         <iframe width="350" height="200" src="{TWITCH_EMBED_URL}" title="Twitch video player" frameborder="0" autoplay="false" allowfullscreen></iframe>
@@ -190,8 +190,9 @@ def home():
                     align_items="end",
                     justify="end",
                     width="100%",
-                ),
                 
+            
+            ),
             ),
             
             
@@ -239,14 +240,30 @@ def projects() -> rx.Component:
     """Renders the projects page."""
     return page_content( 
             rx.vstack(
+                rx.box(
+                
             
-            rx.heading("Projects", size="7", margin_bottom="1em"),
-            rx.cond(
-                State.projects,
-                rx.foreach(State.projects, render_project),
-                rx.text("No projects listed yet."),
+                    rx.heading("Projects", size="7", margin_bottom="1em"),
+                    rx.cond(
+                        State.projects,
+                        rx.foreach(State.projects, render_project),
+                        rx.text("No projects listed yet."),
+                        
+                    ),
+                    padding="2em",
+                    spacing="1",
+                    width="100%",
+                    align_items="start",
+                ),
+            rx.hstack(
+                
+                github_graph(),
+                spacing="2",
+                align_items="center",
+                justify="center",
             ),
             align_items="start", width="100%",
+            
         )
     )
 
@@ -329,6 +346,20 @@ def videos():
         )
     )
 
+def github_graph(): 
+    return rx.box(
+        
+        rx.html(
+            #get the graph from github specifically
+            """
+            <img src="https://ghchart.rshah.org/Death916" alt="GitHub Chart" style="width: 100%; height: auto;">
+            
+            """,
+        ),
+        padding="2em",
+        spacing="1",
+    )
+
 
 app = rx.App(
     theme=rx.theme(
@@ -350,3 +381,5 @@ app.add_page(videos)
 # TODO add unzip to requirements for system
 # TODO move project data to a json file or something
 # TODO add a contact page or link
+# TODO add live printer stream
+# TODO update videos using youtube api
