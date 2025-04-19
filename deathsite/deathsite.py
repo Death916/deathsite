@@ -229,13 +229,12 @@ def page_content(content):
                 padding="1em",
                 width="100%",
                 align_items="center",
-                ),
+            ),
             rx.box(
                 content,
                 align_items="center",
                 justify="center",
                 width="100%",
-            
                 padding="2em",
             ),
             rx.box(
@@ -245,11 +244,15 @@ def page_content(content):
                 align_items="end",
                 justify="end",
             ),
-            
-           
         ),
-
-        
+        style={
+            "background": "linear-gradient(rgba(33, 37, 41, 0.92), rgba(33, 37, 41, 0.92)), url('/header.png')",
+            "backgroundSize": "cover",
+            "backgroundPosition": "center",
+            "backgroundRepeat": "no-repeat",
+            "backgroundAttachment": "fixed",  # This makes the background stay fixed while scrolling
+            "minHeight": "100vh",  # This ensures the background covers the full viewport height
+        },
     )
 
 @rx.page(route="/projects")
