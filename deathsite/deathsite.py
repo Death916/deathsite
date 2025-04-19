@@ -17,11 +17,17 @@ PROJECTS_DATA = [
         "description": "This site is a personal portfolio and blog.",
         "status": "Ongoing",
         "link": "github.com/Death916/deathsite",
-    },  
+    },
+    {
+        "title": "Deathclock",
+        "description": "Sports and weather clock and dashboard",
+        "status": "Ongoing",
+        "link": "github.com/Death916/deathclock",
+    }, 
     {
         "title": "Death916's Guild",
         "description": "My guild page.",
-        "status": "Ongoing",
+        "status": "Planning",
         "link": "/guild",
     },
 ]
@@ -255,7 +261,11 @@ def render_project(project: dict) -> rx.Component:
                 rx.cond(
                     project["status"] == "Completed", "green",
                     rx.cond(
-                        project["status"] == "Planning", "yellow", "gray"
+                        project["status"] == "Planning", "yellow",
+                        rx.cond(
+                            project["status"] == "Paused", "red",
+                            "gray"
+                        )
                     )
                 )
             ),
