@@ -94,7 +94,7 @@ def footer() -> rx.Component:
         border_top="1px solid #dee2e6",
         width="100%",
         text_align="center",  # Center the text
-        position="sticky",  # Stick to the bottom
+        position="fixed",  # Stick to the bottom
         bottom="0",  # Stick to the bottom
         bg="",  # 
     )
@@ -191,13 +191,26 @@ def page_content(content):
                 width="100%",
                 align_items="center",
                 ),
-
-            content,
-            align_items="center",
-            justify="center",
-            width="100%",
+            rx.box(
+                content,
+                align_items="center",
+                justify="center",
+                width="100%",
+            
+                padding="2em",
+            ),
+            rx.box(
+                footer(),
+                padding="1em",
+                width="100%",
+                align_items="end",
+                justify="end",
+            ),
+            
+           
         ),
-        width="100%",
+        
+        
     )
 
 @rx.page(route="/projects")
