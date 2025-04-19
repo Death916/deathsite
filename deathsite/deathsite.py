@@ -42,21 +42,12 @@ class State(rx.State):
 
 
 def navigation_button(text: str) -> rx.Component:
-    """Creates a navigation button with conditional active styling."""
-    active_style_dict = {
-        "background_color": "#ffc107",
-        "color": "#212529",
-        "text_decoration": "none",
-    }
-    return rx.button(
+    """Creates a navigation button with proper routing."""
+    route = text.lower() if text != "Home" else "/"
+    return rx.link(
         text,
-        on_click=lambda: State.go_to_page(text),
-        variant="soft",
-        style=rx.cond(
-            State.current_page == text,
-            {**NAV_BUTTON_STYLE, **active_style_dict},
-            NAV_BUTTON_STYLE,
-        ),
+        href=route,
+        style=NAV_BUTTON_STYLE,
     )
 
 
@@ -108,82 +99,85 @@ def footer() -> rx.Component:
         bg="",  # 
     )
 
-
+# (setq eldoc-echo-area-use-multiline-p nil)
+@rx.page(route="/")
 @rx.page(route="/home")
 def home():
-    return rx.box(
-        rx.vstack(
-            rx.container(
-                rx.vstack(
-                    rx.heading(
-                        "Welcome to my domain",
-                        color="#ffffff",
-                        style={"text_align": "center"},
+    return page_content(
+        rx.box(
+            rx.vstack(
+                rx.container(
+                    rx.vstack(
+                        rx.heading(
+                            "Welcome to my domain",
+                            color="#ffffff",
+                            style={"text_align": "center"},
+                        ),
+                        rx.text(
+                            "This is a personal site for my projects and streams. Never really made a full site for myself before so this will be a work in progress.",
+                            color="#ffffff",
+                            style={"text_align": "center"},
+                        ),
+                        spacing="1",
+                        width="100%",
+                        align_items="center",
+                        justify="center",
                     ),
-                    rx.text(
-                        "This is a personal site for my projects and streams. Never really made a full site for myself before so this will be a work in progress.",
-                        color="#ffffff",
-                        style={"text_align": "center"},
-                    ),
-                    spacing="1",
+                    padding="2em",
                     width="100%",
                     align_items="center",
                     justify="center",
                 ),
-                padding="2em",
-                width="100%",
                 align_items="center",
                 justify="center",
-            ),
-            align_items="center",
-            justify="center",
-            width="100%",
-        ),
-        rx.hstack(
-            rx.vstack(
-                rx.heading("Whats New:", size="8", color="#ffffff"),
-                rx.html(
-                    f"""
-                    <iframe width="350" height="200" src="{YOUTUBE_EMBED_URL}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                    """
-                ),
-                rx.text("Latest Stream: ", color="#ffffff"),
-                rx.html(
-                    f"""
-                    <iframe width="350" height="200" src="{TWITCH_EMBED_URL}" title="Twitch video player" frameborder="0" autoplay="false" allowfullscreen></iframe>
-
-                    """
-                ),
-                align_items="start",
-                spacing="2",
-                justify="start",
-            
-            ),
-            rx.vstack(
-                rx.heading(
-                    "Links",
-                    size="8",
-                    color="#ffffff",
-                ),
-                rx.link(
-                    "GitHub",
-                    href=GITHUB_URL,
-                    color="#736E77",
-                    size="4",
-                    effect="underline",
-                    is_external=True,
-                ),
-                align_items="end",
-                justify="end",
                 width="100%",
             ),
+            rx.hstack(
+                rx.vstack(
+                    rx.heading("Whats New:", size="8", color="#ffffff"),
+                    rx.html(
+                        f"""
+                        <iframe width="350" height="200" src="{YOUTUBE_EMBED_URL}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        """
+                    ),
+                    rx.text("Latest Stream: ", color="#ffffff"),
+                    rx.html(
+                        f"""
+                        <iframe width="350" height="200" src="{TWITCH_EMBED_URL}" title="Twitch video player" frameborder="0" autoplay="false" allowfullscreen></iframe>
+
+                        """
+                    ),
+                    align_items="start",
+                    spacing="2",
+                    justify="start",
+                
+                ),
+                rx.vstack(
+                    rx.heading(
+                        "Links",
+                        size="8",
+                        color="#ffffff",
+                    ),
+                    rx.link(
+                        "GitHub",
+                        href=GITHUB_URL,
+                        color="#736E77",
+                        size="4",
+                        effect="underline",
+                        is_external=True,
+                    ),
+                    align_items="end",
+                    justify="end",
+                    width="100%",
+                ),
+                
+            ),
             
-        ),
-         
+            
+            align_items="start",
+            width="100%",
         
-        align_items="start",
-        width="100%",
-       
+        )
     )
 
 
@@ -191,6 +185,13 @@ def page_content(content):
     ## Wraps the content in a box with a dark background and padding
     return rx.box(
         rx.vstack(
+            rx.box(
+                header(),
+                padding="1em",
+                width="100%",
+                align_items="center",
+                ),
+
             content,
             align_items="center",
             justify="center",
@@ -259,38 +260,6 @@ def videos():
     )
 
 
-def index() -> rx.Component:
-    return rx.box(
-        header(),
-        rx.box(
-            rx.cond(
-                State.current_page == "Home",
-                home(),
-                rx.cond(
-                    State.current_page == "Videos",
-                    videos(),
-                    rx.cond(
-                        State.current_page == "Blog",
-                        blog(),
-                        rx.cond(
-                            State.current_page == "Projects",
-                            projects(),
-                            home()  # default case
-                        )
-                    )
-                )
-            ),
-            width="100%",
-            flex_grow="1",
-        ),
-        footer(),
-        width="100%",
-        display="flex",
-        flex_direction="column",
-        min_height="100vh",
-    )
-
-
 app = rx.App(
     theme=rx.theme(
         appearance="dark",
@@ -300,11 +269,11 @@ app = rx.App(
         text_color="#ffffff",  # Light text color
     )
 )
-app.add_page(
-    index,
-    route="/",
-    title=State.page_title,
-)
+
+app.add_page(home)
+app.add_page(projects)
+app.add_page(blog)
+app.add_page(videos)
 
 
 # TODO add guild page
