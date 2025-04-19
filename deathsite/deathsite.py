@@ -186,13 +186,30 @@ def home():
                         size="4",
                         effect="underline",
                         is_external=True,
+                        padding="0.5em",
                     ),
+                    rx.spacer(
+                        min_height="15em"
+                    ),  
+                    rx.heading(
+                        "Contact",
+                        size="8",
+                        color="#ffffff",
+                    ),
+                    rx.link(
+                        "Email",
+                        href="mailto:mail@death916.xyz.com",
+                        color="#736E77",
+                        size="4",
+                        effect="underline",
+                    ),
+                    padding="2em",
+                    spacing="1",
+                    height="100%",  
                     align_items="end",
-                    justify="end",
+                     
                     width="100%",
-                
-            
-            ),
+                ),
             ),
             
             
