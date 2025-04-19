@@ -11,6 +11,20 @@ YOUTUBE_EMBED_URL = "https://www.youtube.com/embed/D43Ks8fxoz4"
 TWITCH_CHAT_URL = f"https://www.twitch.tv/embed/{TWITCH_USERNAME}/chat?parent=localhost&muted=true"
 TWITCH_EMBED_URL = f"https://player.twitch.tv/?video=2424240989&parent=localhost&autoplay=false"
 GITHUB_URL = "https://github.com/Death916"
+PROJECTS_DATA = [
+    {
+        "title": "Death916's Site",
+        "description": "This site is a personal portfolio and blog.",
+        "status": "Ongoing",
+        "link": "github.com/Death916/deathsite",
+    },  
+    {
+        "title": "Death916's Guild",
+        "description": "My guild page.",
+        "status": "Ongoing",
+        "link": "/guild",
+    },
+]
 
 # styles
 
@@ -40,6 +54,7 @@ class State(rx.State):
     def go_to_page(self, page: str):
         self.current_page = page
 
+    projects: list[dict[str, str]] = PROJECTS_DATA
 
 def navigation_button(text: str) -> rx.Component:
     """Creates a navigation button with proper routing."""
@@ -209,19 +224,52 @@ def page_content(content):
             
            
         ),
-        
+
         
     )
 
 @rx.page(route="/projects")
-def projects():
-    return page_content(
-        rx.vstack(
-            rx.heading("Projects Page", size="3", color="#ffffff"),
-            rx.text("This is the projects page content.", color="#ffffff"),
-            padding="2em",
-            spacing="1",
+def projects() -> rx.Component:
+    """Renders the projects page."""
+    return page_content( 
+            rx.vstack(
+            
+            rx.heading("Projects", size="7", margin_bottom="1em"),
+            rx.cond(
+                State.projects,
+                rx.foreach(State.projects, render_project),
+                rx.text("No projects listed yet."),
+            ),
+            align_items="start", width="100%",
         )
+    )
+
+def render_project(project: dict) -> rx.Component:
+    """Renders a single project card."""
+    return rx.vstack(
+        rx.heading(project["title"], size="5"),
+        rx.badge(
+            project["status"],
+            color_scheme=rx.cond(
+                project["status"] == "Ongoing", "blue",
+                rx.cond(
+                    project["status"] == "Completed", "green",
+                    rx.cond(
+                        project["status"] == "Planning", "yellow", "gray"
+                    )
+                )
+            ),
+            margin_y="0.3em",
+        ),
+        rx.text(project["description"], margin_y="0.5em"),
+        rx.cond(
+            project["link"],
+            rx.link(project["title"], href=project["link"], is_external=True),
+            rx.fragment(),
+        ),
+        padding_bottom="1.5em", margin_bottom="1.5em",
+        border_bottom="1px solid #e9ecef", align_items="start", width="100%",
+        _last={"border_bottom": "none"},
     )
 
 @rx.page(route="/blog")
@@ -291,3 +339,5 @@ app.add_page(videos)
 
 # TODO add guild page
 # TODO add unzip to requirements for system
+# TODO move project data to a json file or something
+# TODO add a contact page or link
