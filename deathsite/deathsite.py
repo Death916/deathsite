@@ -291,25 +291,24 @@ def blog():
             rx.scroll_area(
                 rx.flex(
                     rx.markdown(
-                         "# April 05 2025"
-                        "\n\n## Starting this site\n\n"
-                        "I wanted to finally have a central place for all my doings. Figured now was the time to get a personal site going when I saw the reflex framework for python. I really didnt like always having to drop to JS or something for web"
-                        
-
-                        
+                        "# April 19 2025\n\n"
+                        "Been using a new IRC client called Halloy. Its written in rust and has a very nice interface. Its pretty much my go to now."
+                        "Its made me want to get my rust skills back up again and drop some contributions. You can catch me on Libera.Chat pretty much always. Heres the link to the project:"
                     ),
-                    
+                    rx.link("Halloy", href="https://github.com/squidowl/halloy", is_external=True),
+                    rx.markdown(
+                        "# April 05 2025\n\n## Starting this site\n\n"
+                        "I wanted to finally have a central place for all my doings. Figured now was the time to get a personal site going when I saw the reflex framework for python. I really didnt like always having to drop to JS or something for web"
+                    ),
                     direction="column",
                     spacing="4",
                 ),
-    type="always",
-    scrollbars="vertical",
-    style={"height": 580},
+                type="always",
+                scrollbars="vertical",
+                style={"height": 580},
             ),
             padding="2em",
             spacing="1",
-
-        
         )
     )
 
