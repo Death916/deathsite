@@ -2,7 +2,6 @@
 """personal site for projects/streams"""
 import reflex as rx
 import datetime
-import videos
 import asyncio
 
 
@@ -52,12 +51,15 @@ NAV_BUTTON_STYLE = {
     },
 }
 
+from deathsite.videos import Youtube
+
 class State(rx.State):
     current_page: str = "Home"
     page_title: str = "Death916's Site"  # Added page_title attribute
     current_time: str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     projects: list[dict[str, str]] = PROJECTS_DATA
     current_yt_video: str = ""
+    last_yt_fetch: str = ""  # ISO date string
 
     def update_time(self):
         self.current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -72,6 +74,14 @@ class State(rx.State):
         yt.get_newest_video()
         self.current_yt_video = yt.current_yt_video
         await asyncio.sleep(86400)  # Update every 60 seconds
+
+    async def update_yt_video(self):
+        today = datetime.date.today().isoformat()
+        if self.last_yt_fetch != today or not self.current_yt_video:
+            yt = Youtube()
+            url = yt.get_current_yt_video()
+            self.current_yt_video = url
+            self.last_yt_fetch = today
     
 
    

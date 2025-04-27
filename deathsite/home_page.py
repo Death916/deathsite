@@ -1,10 +1,10 @@
 import reflex as rx
-from deathsite.deathsite import page_content, YOUTUBE_EMBED_URL, TWITCH_EMBED_URL, GITHUB_URL
+from deathsite.deathsite import page_content, TWITCH_EMBED_URL, GITHUB_URL, State
 
-@rx.page(route="/")
+@rx.page(route="/", on_load=State.update_yt_video)
 @rx.page(route="/home")
 def home():
-     return page_content(
+    return page_content(
         rx.box(
             rx.vstack(
                 rx.container(
@@ -36,22 +36,23 @@ def home():
             rx.hstack(
                 rx.vstack(
                     rx.heading("Whats New:", size="8", color="#ffffff"),
+                    
                     rx.html(
+                        # Use Var.contains() and Var.split() for reactive string manipulation
                         f"""
-                        <iframe width="350" height="200" src="{YOUTUBE_EMBED_URL}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <iframe width="350" height="200" src={rx.cond(State.current_yt_video.contains('v='), f"https://www.youtube.com/embed/{State.current_yt_video.split('v=')[1]}", "about:blank")} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         """
                     ),
-                    rx.text("Stream: ", color="#ffffff"),
                     rx.html(
                         f"""
                         <iframe width="350" height="200" src="{TWITCH_EMBED_URL}" title="Twitch video player" frameborder="0" autoplay="false" allowfullscreen></iframe>
 
                         """
                     ),
+                
                     align_items="start",
                     spacing="2",
                     justify="start",
-                
                 ),
                 rx.vstack(
                     rx.heading(
@@ -91,10 +92,7 @@ def home():
                     width="100%",
                 ),
             ),
-            
-            
             align_items="start",
             width="100%",
-        
         )
     )
