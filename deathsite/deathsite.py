@@ -2,6 +2,10 @@
 """personal site for projects/streams"""
 import reflex as rx
 import datetime
+import videos
+import asyncio
+
+
 
 
 # constants
@@ -51,8 +55,9 @@ NAV_BUTTON_STYLE = {
 class State(rx.State):
     current_page: str = "Home"
     page_title: str = "Death916's Site"  # Added page_title attribute
-
     current_time: str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    projects: list[dict[str, str]] = PROJECTS_DATA
+    current_yt_video: str = ""
 
     def update_time(self):
         self.current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -60,8 +65,17 @@ class State(rx.State):
     def go_to_page(self, page: str):
         self.current_page = page
 
-    projects: list[dict[str, str]] = PROJECTS_DATA
+    @rx.event(background=True)
+    async def update_current_yt_video(self):
+        """Fetch the current YouTube video in the background."""
+        yt = videos.Youtube()
+        yt.get_newest_video()
+        self.current_yt_video = yt.current_yt_video
+        await asyncio.sleep(86400)  # Update every 60 seconds
+    
 
+   
+        
 def navigation_button(text: str) -> rx.Component:
     """Creates a navigation button with proper routing."""
     route = text.lower() if text != "Home" else "/"

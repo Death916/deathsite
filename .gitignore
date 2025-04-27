@@ -14,3 +14,4 @@ assets*
 /assets*
 # Virtual environments
 .venv
+*.json
