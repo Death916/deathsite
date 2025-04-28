@@ -38,7 +38,7 @@ def home():
                     rx.heading("Whats New:", size="8", color="#ffffff"),
                     
                     rx.html(
-                        # Use Var.contains() and Var.split() for reactive string manipulation
+    
                         f"""
                         <iframe width="350" height="200" src={rx.cond(State.current_yt_video.contains('v='), f"https://www.youtube.com/embed/{State.current_yt_video.split('v=')[1]}", "about:blank")} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         """
@@ -63,6 +63,15 @@ def home():
                     rx.link(
                         "GitHub",
                         href=GITHUB_URL,
+                        color="#736E77",
+                        size="4",
+                        effect="underline",
+                        is_external=True,
+                        padding="0.5em",
+                    ),
+                    rx.link(
+                        "YouTube",
+                        href="https://www.youtube.com/@916hs",
                         color="#736E77",
                         size="4",
                         effect="underline",
