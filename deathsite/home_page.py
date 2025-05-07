@@ -78,6 +78,15 @@ def home():
                         is_external=True,
                         padding="0.5em",
                     ),
+                    rx.link(
+                        "Lemmy (Reddit Alternative)",
+                        href="https://lemmy.death916.xyz",
+                        color="#736E77",
+                        size="4",
+                        effect="underline",
+                        is_external=True,
+                        padding="0.5em",
+                    ),
                     rx.spacer(
                         min_height="15em"
                     ),  
