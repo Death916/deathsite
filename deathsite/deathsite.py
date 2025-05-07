@@ -51,7 +51,7 @@ NAV_BUTTON_STYLE = {
     },
 }
 
-from deathsite.videos import Youtube
+from deathsite.videos import Youtube,get_last_5_yt_videos 
 
 class State(rx.State):
     current_page: str = "Home"
@@ -60,7 +60,7 @@ class State(rx.State):
     projects: list[dict[str, str]] = PROJECTS_DATA
     current_yt_video: str = ""
     last_yt_fetch: str = ""  # ISO date string
-
+    yt_video_list: list[dict[str, str]] = []
     def update_time(self):
         self.current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -82,7 +82,14 @@ class State(rx.State):
             url = yt.get_current_yt_video()
             self.current_yt_video = url
             self.last_yt_fetch = today
-    
+
+    # video updater for videos page
+    async def update_videos(self):
+        videos = get_last_5_yt_videos()
+        self.yt_video_list = videos
+        await asyncio.sleep(864000)  # Update every 10 minutes
+
+
 
    
         
