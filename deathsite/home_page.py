@@ -68,6 +68,24 @@ def home():
                         is_external=True,
                         padding="0.5em",
                     ),
+                    rx.link(
+                        "YouTube",
+                        href="https://www.youtube.com/@916hs",
+                        color="#736E77",
+                        size="4",
+                        effect="underline",
+                        is_external=True,
+                        padding="0.5em",
+                    ),
+                    rx.link(
+                        "Twitch",
+                        href="https://www.twitch.tv/death916",
+                        color="#736E77",
+                        size="4",
+                        effect="underline",
+                        is_external=True,
+                        padding="0.5em",
+                    ),
                     rx.spacer(
                         min_height="15em"
                     ),  
