@@ -36,7 +36,7 @@ def render_project(project: dict) -> rx.Component:
 
 def github_graph():
     return rx.box(
-
+        rx.heading("GitHub Contributions", size="5", margin_bottom="1em"),
         rx.html(
             #get the graph from github specifically
             """
