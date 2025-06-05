@@ -8,8 +8,8 @@ import asyncio
 TWITCH_USERNAME = "Death916"
 YOUTUBE_URL = "https://www.youtube.com/@916HS"
 YOUTUBE_EMBED_URL = "https://www.youtube.com/embed/D43Ks8fxoz4"
-TWITCH_CHAT_URL = f"https://www.twitch.tv/embed/{TWITCH_USERNAME}/chat?parent=localhost&muted=true"
-TWITCH_EMBED_URL = f"https://player.twitch.tv/?channel={TWITCH_USERNAME}&parent=localhost&muted=true"
+TWITCH_CHAT_URL = f"https://www.twitch.tv/embed/{TWITCH_USERNAME}/chat?parent=death916.xyz&muted=true"
+TWITCH_EMBED_URL = f"https://player.twitch.tv/?channel={TWITCH_USERNAME}&parent=death916.xyz&muted=true"
 GITHUB_URL = "https://github.com/Death916"
 PROJECTS_DATA = [
     {

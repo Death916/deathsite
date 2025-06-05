@@ -15,3 +15,7 @@ assets*
 # Virtual environments
 .venv
 *.json
+*log
+*.log
+*.logs
+*log
