@@ -4,9 +4,6 @@ import reflex as rx
 import datetime
 import asyncio
 
-
-
-
 # constants
 TWITCH_USERNAME = "Death916"
 YOUTUBE_URL = "https://www.youtube.com/@916HS"
@@ -32,7 +29,7 @@ PROJECTS_DATA = [
         "title": "Death916's Guild",
         "description": "My guild page.",
         "status": "Planning",
-        "link": "/guild",
+        "link": "https://guildsofwow.com/restoration",
     },
 ]
 
