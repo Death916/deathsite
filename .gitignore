@@ -19,3 +19,5 @@ assets*
 *.log
 *.logs
 *log
+*.flox
+.flox

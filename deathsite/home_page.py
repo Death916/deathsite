@@ -38,9 +38,8 @@ def home():
                     rx.heading("Whats New:", size="8", color="#ffffff"),
                     
                     rx.html(
-    
                         f"""
-                        <iframe width="350" height="200" src={rx.cond(State.current_yt_video.contains('v='), f"https://www.youtube.com/embed/{State.current_yt_video.split('v=')[1]}", "about:blank")} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <iframe width="350" height="200" src={rx.cond(State.current_yt_video.contains('v='), f"https://www.youtube.com/embed/{State.current_yt_video.split('v=')[1].split('&')[0]}", "about:blank")} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         """
                     ),
                     rx.html(

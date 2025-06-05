@@ -64,6 +64,8 @@ class State(rx.State):
     def go_to_page(self, page: str):
         self.current_page = page
 
+    
+
     @rx.event(background=True)
     async def update_current_yt_video(self):
         """Fetch the current YouTube video in the background."""
