@@ -17,14 +17,14 @@ PROJECTS_DATA = [
         "description": "This site is a personal portfolio and blog.",
         "status": "Ongoing",
         "link": "https://github.com/Death916/deathsite",
-        
+
     },
     {
         "title": "Deathclock",
         "description": "Sports and weather clock and dashboard",
         "status": "Ongoing",
         "link": "https://github.com/Death916/deathclock",
-    }, 
+    },
     {
         "title": "Death916's Guild",
         "description": "My guild page.",
@@ -48,7 +48,7 @@ NAV_BUTTON_STYLE = {
     },
 }
 
-from deathsite.videos import Youtube 
+from deathsite.videos import Youtube
 
 class State(rx.State):
     current_page: str = "Home"
@@ -64,7 +64,7 @@ class State(rx.State):
     def go_to_page(self, page: str):
         self.current_page = page
 
-    
+
 
     @rx.event(background=True)
     async def update_current_yt_video(self):
@@ -87,8 +87,7 @@ class State(rx.State):
         yt_instance = Youtube()
         video_urls = yt_instance.get_last_5_yt_videos()
         self.yt_video_list = video_urls
-        # Removed asyncio.sleep as on_load handles initial load.
-        # If periodic background refresh is desired, a separate @rx.background task is better.
+        #look into rx.background for background updates
 
     def get_youtube_embed_url(self, watch_url: str) -> str:
         """Converts a YouTube watch URL to an embed URL."""
@@ -103,8 +102,8 @@ class State(rx.State):
         except Exception:
             # Catch any parsing errors and return a safe default
             return "about:blank"
-   
-        
+
+
 def navigation_button(text: str) -> rx.Component:
     """Creates a navigation button with proper routing."""
     route = text.lower() if text != "Home" else "/"
@@ -158,7 +157,7 @@ def footer() -> rx.Component:
         text_align="center",  # Center the text
         position="fixed",  # Stick to the bottom
         bottom="0",  # Stick to the bottom
-        bg="",  # 
+        bg="",  #
     )
 
 # (setq eldoc-echo-area-use-multiline-p nil)
@@ -202,7 +201,7 @@ app = rx.App(
     theme=rx.theme(
         appearance="dark",
         has_background=True,
-        accent_color="violet", 
+        accent_color="violet",
         background_color="#212529",  # Dark background color
         text_color="#ffffff",  # Light text color
     )

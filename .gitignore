@@ -21,3 +21,4 @@ assets*
 *log
 *.flox
 .flox
+*.ropeproject
