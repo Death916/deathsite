@@ -136,7 +136,7 @@ def header() -> rx.Component:
                 "backgroundSize": "cover",
                 "backgroundPosition": "center",
                 "backgroundRepeat": "no-repeat",
-                "minHeight": "200px",  # Reduced from 300px to 200px
+                "minHeight": "200px",  
                 "display": "flex",
                 "flexDirection": "column",
                 "justifyContent": "center",
@@ -151,13 +151,13 @@ def footer() -> rx.Component:
             color="#6c757d",
             font_size="0.9em",
         ),
-        padding="0.5em",  # Reduced padding
+        padding="0.5em",  
         border_top="1px solid #dee2e6",
         width="100%",
-        text_align="center",  # Center the text
-        position="fixed",  # Stick to the bottom
-        bottom="0",  # Stick to the bottom
-        bg="",  #
+        text_align="center",  
+        position="fixed",  
+        bottom="0",  
+        bg="",  
     )
 
 # (setq eldoc-echo-area-use-multiline-p nil)
