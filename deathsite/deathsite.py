@@ -1,15 +1,19 @@
 # deathsite/deathsite.py
 """personal site for projects/streams"""
-import reflex as rx
+
+import asyncio
 import datetime
 
+import reflex as rx
 
 # constants
 TWITCH_USERNAME = "Death916"
 YOUTUBE_URL = "https://www.youtube.com/@916HS"
 YOUTUBE_EMBED_URL = "https://www.youtube.com/embed/D43Ks8fxoz4"
-TWITCH_CHAT_URL = f"https://www.twitch.tv/embed/{TWITCH_USERNAME}/chat?parent=localhost&muted=true"
-TWITCH_EMBED_URL = f"https://player.twitch.tv/?channel={TWITCH_USERNAME}&parent=localhost&muted=true"
+TWITCH_CHAT_URL = (
+    f"https://www.twitch.tv/embed/{TWITCH_USERNAME}/chat?parent=death916.xyz&muted=true"
+)
+TWITCH_EMBED_URL = f"https://player.twitch.tv/?channel={TWITCH_USERNAME}&parent=death916.xyz&muted=true"
 GITHUB_URL = "https://github.com/Death916"
 PROJECTS_DATA = [
     {
@@ -17,19 +21,18 @@ PROJECTS_DATA = [
         "description": "This site is a personal portfolio and blog.",
         "status": "Ongoing",
         "link": "https://github.com/Death916/deathsite",
-        
     },
     {
         "title": "Deathclock",
         "description": "Sports and weather clock and dashboard",
         "status": "Ongoing",
         "link": "https://github.com/Death916/deathclock",
-    }, 
+    },
     {
         "title": "Death916's Guild",
         "description": "My guild page.",
         "status": "Planning",
-        "link": "/guild",
+        "link": "https://guildsofwow.com/restoration",
     },
 ]
 
@@ -48,11 +51,17 @@ NAV_BUTTON_STYLE = {
     },
 }
 
+from deathsite.videos import Youtube
+
+
 class State(rx.State):
     current_page: str = "Home"
     page_title: str = "Death916's Site"  # Added page_title attribute
-
     current_time: str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    projects: list[dict[str, str]] = PROJECTS_DATA
+    current_yt_video: str = ""
+    last_yt_fetch: str = ""  # ISO date string
+    yt_video_list: list[str] = []  # Changed type to list of strings
 
     def update_time(self):
         self.current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -60,16 +69,55 @@ class State(rx.State):
     def go_to_page(self, page: str):
         self.current_page = page
 
-    projects: list[dict[str, str]] = PROJECTS_DATA
+    @rx.event(background=True)
+    async def update_current_yt_video(self):
+        """Fetch the current YouTube video in the background."""
+        yt = Youtube()  # Corrected instantiation
+        yt.get_newest_video()
+        self.current_yt_video = yt.current_yt_video
+        await asyncio.sleep(600)  # Update every 10 minutes (600 seconds)
+
+    async def update_yt_video(self):
+        today = datetime.date.today().isoformat()
+        if self.last_yt_fetch != today or not self.current_yt_video:
+            yt = Youtube()
+            url = yt.get_current_yt_video()
+            self.current_yt_video = url
+            self.last_yt_fetch = today
+
+    # video updater for videos page
+    async def update_videos(self):
+        yt_instance = Youtube()
+        video_urls = yt_instance.get_last_5_yt_videos()
+        self.yt_video_list = video_urls
+        # look into rx.background for background updates
+
+    def get_youtube_embed_url(self, watch_url: str) -> str:
+        """Converts a YouTube watch URL to an embed URL."""
+        if not isinstance(watch_url, str):
+            return "about:blank"
+        try:
+            if "v=" in watch_url:
+                video_id_part = watch_url.split("v=")[1]
+                video_id = video_id_part.split("&")[
+                    0
+                ]  # Remove any other params like &list=
+                return f"https://www.youtube.com/embed/{video_id}"
+            return "about:blank"
+        except Exception:
+            # Catch any parsing errors and return a safe default
+            return "about:blank"
+
 
 def navigation_button(text: str) -> rx.Component:
     """Creates a navigation button with proper routing."""
-    route = text.lower() if text != "Home" else "/"
+    route = f"/{text.lower()}" if text != "Home" else "/"
     return rx.link(
         text,
         href=route,
         style=NAV_BUTTON_STYLE,
     )
+
 
 def header() -> rx.Component:
     """Site header and navigation."""
@@ -94,13 +142,14 @@ def header() -> rx.Component:
                 "backgroundSize": "cover",
                 "backgroundPosition": "center",
                 "backgroundRepeat": "no-repeat",
-                "minHeight": "200px",  # Reduced from 300px to 200px
+                "minHeight": "200px",
                 "display": "flex",
                 "flexDirection": "column",
                 "justifyContent": "center",
             },
         ),
     )
+
 
 def footer() -> rx.Component:
     return rx.box(
@@ -109,14 +158,15 @@ def footer() -> rx.Component:
             color="#6c757d",
             font_size="0.9em",
         ),
-        padding="0.5em",  # Reduced padding
+        padding="0.5em",
         border_top="1px solid #dee2e6",
         width="100%",
-        text_align="center",  # Center the text
-        position="fixed",  # Stick to the bottom
-        bottom="0",  # Stick to the bottom
-        bg="",  # 
+        text_align="center",
+        position="fixed",
+        bottom="0",
+        bg="",
     )
+
 
 # (setq eldoc-echo-area-use-multiline-p nil)
 def page_content(content):
@@ -159,15 +209,15 @@ app = rx.App(
     theme=rx.theme(
         appearance="dark",
         has_background=True,
-        accent_color="violet", 
+        accent_color="violet",
         background_color="#212529",  # Dark background color
         text_color="#ffffff",  # Light text color
     )
 )
 
+from deathsite.blog_page import blog
 from deathsite.home_page import home
 from deathsite.projects_page import projects
-from deathsite.blog_page import blog
 from deathsite.videos_page import videos
 
 app.add_page(home)

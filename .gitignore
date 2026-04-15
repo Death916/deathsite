@@ -14,3 +14,15 @@ assets*
 /assets*
 # Virtual environments
 .venv
+*.json
+*log
+*.log
+*.logs
+*log
+*.flox
+.flox
+*.ropeproject
+*.tar
+shell.nix
+.envrc
+.direnv
