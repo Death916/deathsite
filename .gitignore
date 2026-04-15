@@ -23,6 +23,6 @@ assets*
 .flox
 *.ropeproject
 *.tar
-production.md
-GEMINI.md
-DEPLOY_README.md
+shell.nix
+.envrc
+.direnv
