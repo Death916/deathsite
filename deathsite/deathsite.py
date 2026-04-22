@@ -28,12 +28,12 @@ PROJECTS_DATA = [
         "status": "Ongoing",
         "link": "https://github.com/Death916/deathclock",
     },
-    {
-        "title": "Death916's Guild",
-        "description": "My guild page.",
-        "status": "Planning",
-        "link": "https://guildsofwow.com/restoration",
-    },
+   # {
+   #    "title": "Death916's Guild",
+   #     "description": "My guild page.",
+    #    "status": "Planning",
+    #    "link": "https://guildsofwow.com/restoration",
+   # },
 ]
 
 # styles
