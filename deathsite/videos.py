@@ -11,7 +11,7 @@ class Youtube:
 
 
     def get_api_key(self):
-        keys_path = os.path.join(os.path.dirname(__file__), "keys.json")
+        keys_path = os.getenv("KEYS_PATH", os.path.join(os.path.dirname(__file__), "keys.json"))
         with open(keys_path) as k:
             keys = json.load(k)
             return keys
