@@ -69,12 +69,14 @@ def projects() -> rx.Component:
                     width="100%",
                     align_items="start",
                 ),
-            rx.hstack(
+            rx.flex(
                 
                 github_graph(),
                 spacing="2",
                 align_items="center",
                 justify="center",
+                direction=rx.breakpoints(initial="column", md="row"),
+                width="100%",
             ),
             align_items="start", width="100%",
             

@@ -33,18 +33,18 @@ def home():
                 justify="center",
                 width="100%",
             ),
-            rx.hstack(
+            rx.flex(
                 rx.vstack(
                     rx.heading("Whats New:", size="8", color="#ffffff"),
                     
                     rx.html(
                         f"""
-                        <iframe width="350" height="200" src={rx.cond(State.current_yt_video.contains('v='), f"https://www.youtube.com/embed/{State.current_yt_video.split('v=')[1].split('&')[0]}", "about:blank")} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <iframe width="100%" style="max-width: 560px; aspect-ratio: 16/9;" src={rx.cond(State.current_yt_video.contains('v='), f"https://www.youtube.com/embed/{State.current_yt_video.split('v=')[1].split('&')[0]}", "about:blank")} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         """
                     ),
                     rx.html(
                         f"""
-                        <iframe width="350" height="200" src="{TWITCH_EMBED_URL}" title="Twitch video player" frameborder="0" autoplay="false" allowfullscreen></iframe>
+                        <iframe width="100%" style="max-width: 560px; aspect-ratio: 16/9;" src="{TWITCH_EMBED_URL}" title="Twitch video player" frameborder="0" autoplay="false" allowfullscreen></iframe>
 
                         """
                     ),
@@ -108,6 +108,9 @@ def home():
                      
                     width="100%",
                 ),
+                direction=rx.breakpoints(initial="column", md="row"),
+                spacing="4",
+                width="100%",
             ),
             align_items="start",
             width="100%",
