@@ -3,10 +3,13 @@
 
 import asyncio
 import datetime
+import os
 
 import reflex as rx
 
 # constants
+UMAMI_WEBSITE_ID = os.getenv("UMAMI_WEBSITE_ID", "")
+UMAMI_SCRIPT_URL = os.getenv("UMAMI_SCRIPT_URL", "")
 TWITCH_USERNAME = "Death916"
 YOUTUBE_URL = "https://www.youtube.com/@916HS"
 YOUTUBE_EMBED_URL = "https://www.youtube.com/embed/D43Ks8fxoz4"
@@ -212,7 +215,16 @@ app = rx.App(
         accent_color="violet",
         background_color="#212529",  # Dark background color
         text_color="#ffffff",  # Light text color
-    )
+    ),
+    head_components=[
+        rx.script(
+            src=UMAMI_SCRIPT_URL,
+            custom_attrs={
+                "data-website-id": UMAMI_WEBSITE_ID,
+                "defer": "true",
+            },
+        )
+    ] if UMAMI_SCRIPT_URL and UMAMI_WEBSITE_ID else [],
 )
 
 from deathsite.blog_page import blog
