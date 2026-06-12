@@ -26,6 +26,20 @@ def render_project(project: dict) -> rx.Component:
         ),
         rx.text(project["description"], margin_y="0.5em"),
         rx.cond(
+            project["hardware"],
+            rx.vstack(
+                rx.text("Hardware used", font_weight="bold"),
+                rx.foreach(
+                    project["hardware"],
+                    lambda hw: rx.link(
+                        hw[0], href=hw[1], is_external=True, color_scheme="violet"
+                    ),
+                ),
+                align_items="start",
+                margin_y="0.5em",
+            ),
+        ),
+        rx.cond(
             project["link"],
             rx.link(project["title"], href=project["link"], is_external=True),
             rx.fragment(),

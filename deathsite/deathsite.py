@@ -24,6 +24,10 @@ PROJECTS_DATA = [
         "description": "This site is a personal portfolio and blog.",
         "status": "Ongoing",
         "link": "https://github.com/Death916/deathsite",
+        "hardware": {
+            "Screen": "https://amzn.to/4xk3fpP",
+            "Printer": "https://amzn.to/3S7pDme",
+        },
     },
     {
         "title": "Deathclock",
@@ -31,12 +35,12 @@ PROJECTS_DATA = [
         "status": "Ongoing",
         "link": "https://github.com/Death916/deathclock",
     },
-   # {
-   #    "title": "Death916's Guild",
-   #     "description": "My guild page.",
+    # {
+    #    "title": "Death916's Guild",
+    #     "description": "My guild page.",
     #    "status": "Planning",
     #    "link": "https://guildsofwow.com/restoration",
-   # },
+    # },
 ]
 
 # styles
@@ -57,14 +61,22 @@ NAV_BUTTON_STYLE = {
 from deathsite.videos import Youtube
 
 
+class Project(rx.Base):
+    title: str
+    description: str
+    status: str
+    link: str
+    hardware: dict[str, str] = {}
+
+
 class State(rx.State):
     current_page: str = "Home"
-    page_title: str = "Death916's Site"  
+    page_title: str = "Death916's Site"
     current_time: str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    projects: list[dict[str, str]] = PROJECTS_DATA
+    projects: list[Project] = PROJECTS_DATA
     current_yt_video: str = ""
-    last_yt_fetch: str = ""  
-    yt_video_list: list[str] = []  
+    last_yt_fetch: str = ""
+    yt_video_list: list[str] = []
 
     def update_time(self):
         self.current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -75,7 +87,7 @@ class State(rx.State):
     @rx.event(background=True)
     async def update_current_yt_video(self):
         """Fetch the current YouTube video in the background."""
-        yt = Youtube()  
+        yt = Youtube()
         yt.get_newest_video()
         self.current_yt_video = yt.current_yt_video
         await asyncio.sleep(600)  # Update every 10 minutes (600 seconds)
@@ -222,7 +234,9 @@ app = rx.App(
                 "defer": "true",
             },
         )
-    ] if UMAMI_SCRIPT_URL and UMAMI_WEBSITE_ID else [],
+    ]
+    if UMAMI_SCRIPT_URL and UMAMI_WEBSITE_ID
+    else [],
 )
 
 from deathsite.blog_page import blog
@@ -241,4 +255,3 @@ app.add_page(videos)
 # TODO move project data to a json file or something
 
 # TODO add live printer stream
-
