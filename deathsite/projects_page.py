@@ -1,5 +1,7 @@
 import reflex as rx
-from deathsite.deathsite import page_content, State 
+
+from deathsite.deathsite import State, page_content
+
 
 def render_project(project: dict) -> rx.Component:
     """Renders a single project card."""
@@ -8,17 +10,17 @@ def render_project(project: dict) -> rx.Component:
         rx.badge(
             project["status"],
             color_scheme=rx.cond(
-                project["status"] == "Ongoing", "blue",
+                project["status"] == "Ongoing",
+                "blue",
                 rx.cond(
-                    project["status"] == "Completed", "green",
+                    project["status"] == "Completed",
+                    "green",
                     rx.cond(
-                        project["status"] == "Planning", "yellow",
-                        rx.cond(
-                            project["status"] == "Paused", "red",
-                            "gray"
-                        )
-                    )
-                )
+                        project["status"] == "Planning",
+                        "yellow",
+                        rx.cond(project["status"] == "Paused", "red", "gray"),
+                    ),
+                ),
             ),
             margin_y="0.3em",
         ),
@@ -28,8 +30,11 @@ def render_project(project: dict) -> rx.Component:
             rx.link(project["title"], href=project["link"], is_external=True),
             rx.fragment(),
         ),
-        padding_bottom="1.5em", margin_bottom="1.5em",
-        border_bottom="1px solid #e9ecef", align_items="start", width="100%",
+        padding_bottom="1.5em",
+        margin_bottom="1.5em",
+        border_bottom="1px solid #e9ecef",
+        align_items="start",
+        width="100%",
         _last={"border_bottom": "none"},
     )
 
@@ -38,7 +43,7 @@ def github_graph():
     return rx.box(
         rx.heading("GitHub Contributions", size="5", margin_bottom="1em"),
         rx.html(
-            #get the graph from github specifically
+            # get the graph from github specifically
             """
             <img src="https://ghchart.rshah.org/Death916" alt="GitHub Chart" style="width: 100%; height: auto;">
 
@@ -49,28 +54,38 @@ def github_graph():
     )
 
 
+def projects_footer() -> rx.Component:
+    return rx.box(
+        rx.text(
+            "Product links on this page are affiliate links",
+            color="#6c757d",
+            font_size="0.9em",
+        ),
+        padding="0.5em",
+        width="100%",
+        text_align="center",
+        bg="",
+    )
+
+
 @rx.page(route="/projects")
 def projects() -> rx.Component:
     """Renders the projects page."""
-    return page_content( 
-            rx.vstack(
-                rx.box(
-                
-            
-                    rx.heading("Projects", size="7", margin_bottom="1em"),
-                    rx.cond(
-                        State.projects,
-                        rx.foreach(State.projects, render_project),
-                        rx.text("No projects listed yet."),
-                        
-                    ),
-                    padding="2em",
-                    spacing="1",
-                    width="100%",
-                    align_items="start",
+    return page_content(
+        rx.vstack(
+            rx.box(
+                rx.heading("Projects", size="7", margin_bottom="1em"),
+                rx.cond(
+                    State.projects,
+                    rx.foreach(State.projects, render_project),
+                    rx.text("No projects listed yet."),
                 ),
+                padding="2em",
+                spacing="1",
+                width="100%",
+                align_items="start",
+            ),
             rx.flex(
-                
                 github_graph(),
                 spacing="2",
                 align_items="center",
@@ -78,8 +93,8 @@ def projects() -> rx.Component:
                 direction=rx.breakpoints(initial="column", md="row"),
                 width="100%",
             ),
-            align_items="start", width="100%",
-            
+            projects_footer(),
+            align_items="start",
+            width="100%",
         )
     )
-

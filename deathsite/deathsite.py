@@ -59,12 +59,12 @@ from deathsite.videos import Youtube
 
 class State(rx.State):
     current_page: str = "Home"
-    page_title: str = "Death916's Site"  # Added page_title attribute
+    page_title: str = "Death916's Site"  
     current_time: str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     projects: list[dict[str, str]] = PROJECTS_DATA
     current_yt_video: str = ""
-    last_yt_fetch: str = ""  # ISO date string
-    yt_video_list: list[str] = []  # Changed type to list of strings
+    last_yt_fetch: str = ""  
+    yt_video_list: list[str] = []  
 
     def update_time(self):
         self.current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -75,7 +75,7 @@ class State(rx.State):
     @rx.event(background=True)
     async def update_current_yt_video(self):
         """Fetch the current YouTube video in the background."""
-        yt = Youtube()  # Corrected instantiation
+        yt = Youtube()  
         yt.get_newest_video()
         self.current_yt_video = yt.current_yt_video
         await asyncio.sleep(600)  # Update every 10 minutes (600 seconds)
@@ -108,7 +108,6 @@ class State(rx.State):
                 return f"https://www.youtube.com/embed/{video_id}"
             return "about:blank"
         except Exception:
-            # Catch any parsing errors and return a safe default
             return "about:blank"
 
 
@@ -173,7 +172,6 @@ def footer() -> rx.Component:
 
 # (setq eldoc-echo-area-use-multiline-p nil)
 def page_content(content):
-    ## Wraps the content in a box with a dark background and padding
     return rx.box(
         rx.vstack(
             rx.box(
