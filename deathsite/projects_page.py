@@ -26,6 +26,11 @@ def render_project(project: dict) -> rx.Component:
         ),
         rx.text(project["description"], margin_y="0.5em"),
         rx.cond(
+            project["link"],
+            rx.link(project["title"], href=project["link"], is_external=True),
+            rx.fragment(),
+        ),
+        rx.cond(
             project["hardware"],
             rx.vstack(
                 rx.text("Hardware used", font_weight="bold"),
@@ -38,11 +43,6 @@ def render_project(project: dict) -> rx.Component:
                 align_items="start",
                 margin_y="0.5em",
             ),
-        ),
-        rx.cond(
-            project["link"],
-            rx.link(project["title"], href=project["link"], is_external=True),
-            rx.fragment(),
         ),
         padding_bottom="1.5em",
         margin_bottom="1.5em",
