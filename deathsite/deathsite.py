@@ -24,16 +24,16 @@ PROJECTS_DATA = [
         "description": "This site is a personal portfolio and blog.",
         "status": "Ongoing",
         "link": "https://github.com/Death916/deathsite",
-        "hardware": {
-            "Screen": "https://amzn.to/4xk3fpP",
-            "Printer": "https://amzn.to/3S7pDme",
-        },
     },
     {
         "title": "Deathclock",
         "description": "Sports and weather clock and dashboard",
         "status": "Ongoing",
         "link": "https://github.com/Death916/deathclock",
+        "hardware": {
+            "Screen": "https://amzn.to/4xk3fpP",
+            "Printer": "https://amzn.to/3S7pDme",
+        },
     },
     # {
     #    "title": "Death916's Guild",
