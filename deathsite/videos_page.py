@@ -23,7 +23,7 @@ def videos():
                                 width="100%" 
                                 style="max-width: 350px;"
                                 height="200" 
-                                src="https://www.youtube.com/embed/{video_url.split('v=')[1]}" 
+                                src="https://www.youtube.com/embed/{video_url.split("v=")[1]}" 
                                 title="YouTube video player" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 

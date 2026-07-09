@@ -10,5 +10,4 @@ config = rx.Config(
         "https://death916.xyz/",
     ],
     # backend_port=8005,
-
 )

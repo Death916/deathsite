@@ -58,10 +58,12 @@ NAV_BUTTON_STYLE = {
     },
 }
 
+from pydantic import BaseModel
+
 from deathsite.videos import Youtube
 
 
-class Project(rx.Base):
+class Project(BaseModel):
     title: str
     description: str
     status: str
@@ -77,6 +79,7 @@ class State(rx.State):
     current_yt_video: str = ""
     last_yt_fetch: str = ""
     yt_video_list: list[str] = []
+    free_time: list[str] = []
 
     def update_time(self):
         self.current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -143,6 +146,7 @@ def header() -> rx.Component:
                 navigation_button("Videos"),
                 navigation_button("Blog"),
                 navigation_button("Projects"),
+                navigation_button("Free_Time"),
                 spacing="4",
                 justify="center",
                 align="center",
@@ -240,6 +244,7 @@ app = rx.App(
 )
 
 from deathsite.blog_page import blog
+from deathsite.free_time import free_time
 from deathsite.home_page import home
 from deathsite.projects_page import projects
 from deathsite.videos_page import videos
@@ -248,7 +253,7 @@ app.add_page(home)
 app.add_page(projects)
 app.add_page(blog)
 app.add_page(videos)
-
+app.add_page(free_time)
 
 # TODO add guild page
 # TODO add unzip to requirements for system?

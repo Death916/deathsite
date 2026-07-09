@@ -1,6 +1,7 @@
 import reflex as rx
 from deathsite.deathsite import page_content, TWITCH_EMBED_URL, GITHUB_URL, State
 
+
 @rx.page(route="/", on_load=State.update_yt_video)
 @rx.page(route="/home")
 def home():
@@ -36,10 +37,9 @@ def home():
             rx.flex(
                 rx.vstack(
                     rx.heading("Whats New:", size="8", color="#ffffff"),
-                    
                     rx.html(
                         f"""
-                        <iframe width="100%" style="max-width: 560px; aspect-ratio: 16/9;" src={rx.cond(State.current_yt_video.contains('v='), f"https://www.youtube.com/embed/{State.current_yt_video.split('v=')[1].split('&')[0]}", "about:blank")} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <iframe width="100%" style="max-width: 560px; aspect-ratio: 16/9;" src={rx.cond(State.current_yt_video.contains("v="), f"https://www.youtube.com/embed/{State.current_yt_video.split('v=')[1].split('&')[0]}", "about:blank")} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         """
                     ),
                     rx.html(
@@ -48,7 +48,6 @@ def home():
 
                         """
                     ),
-                
                     align_items="start",
                     spacing="2",
                     justify="start",
@@ -86,9 +85,7 @@ def home():
                         is_external=True,
                         padding="0.5em",
                     ),
-                    rx.spacer(
-                        min_height="15em"
-                    ),  
+                    rx.spacer(min_height="15em"),
                     rx.heading(
                         "Contact",
                         size="8",
@@ -103,9 +100,8 @@ def home():
                     ),
                     padding="2em",
                     spacing="1",
-                    height="100%",  
+                    height="100%",
                     align_items="end",
-                     
                     width="100%",
                 ),
                 direction=rx.breakpoints(initial="column", md="row"),
