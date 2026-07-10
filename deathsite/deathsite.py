@@ -91,6 +91,18 @@ class State(rx.State):
             print(f"Error loading free time manifest: {e}")
             self.free_time = []
 
+    @rx.var
+    def selected_project(self) -> dict:
+        slug = self.router.page.params.get("slug", "")
+        for item in self.free_time:
+            if item.get("slug") == slug:
+                return item
+        return {}
+
+    @rx.var
+    def selected_project_tags(self) -> list[str]:
+        return self.selected_project.get("tags", [])
+
     def go_to_page(self, page: str):
         self.current_page = page
 
@@ -228,7 +240,7 @@ def page_content(content):
 
 
 from deathsite.blog_page import blog
-from deathsite.free_time import free_time
+from deathsite.free_time import free_time, view_project
 from deathsite.home_page import home
 from deathsite.projects_page import projects
 from deathsite.videos_page import videos
@@ -260,6 +272,7 @@ app.add_page(projects)
 app.add_page(blog)
 app.add_page(videos)
 app.add_page(free_time)
+app.add_page(view_project)
 
 # TODO add guild page
 # TODO add unzip to requirements for system?

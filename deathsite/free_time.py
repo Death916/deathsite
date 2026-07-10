@@ -48,6 +48,7 @@ class GetFreeTime:
         for item in self.gallery_items:
             item["thumbnail"] = f"/thumbs/{item['slug']}.png"
             item["file"] = f"/{item['slug']}.html"
+            item["route"] = f"/free_time/{item['slug']}"
 
         return self.gallery_items
 
@@ -102,7 +103,7 @@ def free_time():
                             rx.hstack(
                                 rx.cond(
                                     f["type"] == "html",
-                                    rx.link("Open App", href=f["file"], is_external=True),
+                                    rx.link("Open App", href=f["route"]),
                                     rx.link("View Project", href=f["link"], is_external=True),
                                 ),
                                 spacing="2",
@@ -121,4 +122,36 @@ def free_time():
                 width="100%",
             ),
         ),
+    )
+
+
+@rx.page(route="/free_time/[slug]", on_load=State.load_free_time)
+def view_project():
+    return page_content(
+        rx.hstack(
+            rx.html(
+                f'<iframe src="{State.selected_project["file"]}" width="100%" height="85vh" style="border: none; border-radius: 8px;" sandbox="allow-scripts"></iframe>',
+                width="75%",
+            ),
+            rx.vstack(
+                rx.heading(State.selected_project["title"], size="5"),
+                rx.text(State.selected_project["description"]),
+                rx.text(f"Created: {State.selected_project['created']}"),
+                rx.hstack(
+                    rx.foreach(
+                        State.selected_project_tags,
+                        lambda tag: rx.badge(tag, color_scheme="violet"),
+                    ),
+                    wrap="wrap",
+                ),
+                rx.link("Open App in New Tab", href=State.selected_project["file"], is_external=True),
+                width="25%",
+                align_items="start",
+                spacing="4",
+                padding="1em",
+            ),
+            width="100%",
+            align_items="start",
+            spacing="4",
+        )
     )
