@@ -9,6 +9,7 @@ __pycache__/
 devenv.local.nix
 devenv.local.yaml
 
+
 # direnv
 .direnv
 
