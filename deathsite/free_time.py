@@ -1,10 +1,14 @@
+import json
+import os
+import shutil
+
 import reflex as rx
 from pydantic import BaseModel
 
 from deathsite.deathsite import page_content, State
 
-FREE_TIME_MANIFEST_FILE = ""
-FREE_TIME_DIR = ""
+FREE_TIME_DIR = "/mnt/myjfs/gallery/"
+ASSETS_DIR = ""
 
 """
 manifest.json schema
@@ -24,6 +28,27 @@ manifest.json schema
    ]
 """
 
+
+# test with files in assets first
+class GetFreeTime:
+    def __init__(self, gallery_path=FREE_TIME_DIR):
+        self.gallery_path = gallery_path
+        self.manifest_path = os.path.join(gallery_path, "manifest.json")
+        self.gallery_items = []
+        if not os.path.exists(self.manifest_path):
+            raise FileNotFoundError("manifest.json not found")
+        with open(self.manifest_path, "r") as f:
+            data = json.load(f)
+            for item in data:
+                self.gallery_items.append(item)
+
+    def move_to_assets(self, assets_path=ASSETS_DIR):
+        for item in self.gallery_items:
+            src = os.path.join(self.gallery_path, item["file"])
+            dst = os.path.join(assets_path, item["file"])
+            shutil.copy(src, dst)
+
+
 class FreeTime(BaseModel):
     slug: str
     title: str
@@ -36,8 +61,6 @@ class FreeTime(BaseModel):
     safety_checked: bool | None = None
     safety_checked_at: str | None = None
 
-    def  get_free_time(manifest,fol )
-
     def parse_manifest(self, data: dict):
         self.slug = data.get("slug")
         self.title = data.get("title")
@@ -49,7 +72,7 @@ class FreeTime(BaseModel):
         self.tags = data.get("tags", [])
         self.safety_checked = data.get("safety_checked")
         self.safety_checked_at = data.get("safety_checked_at")
-    
+
 
 @rx.page(route="/free_time")
 def free_time():
@@ -63,12 +86,7 @@ def free_time():
                 align="center",
             ),
             rx.flex(
-                rx.foreach(
-                    State.free_time,
-                    lambda f: rx.box(
-                    
-                    )
-                ),
+                rx.foreach(State.free_time, lambda f: rx.box()),
             ),
         ),
     )

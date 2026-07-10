@@ -4,15 +4,10 @@
 import asyncio
 import datetime
 import os
+
 import reflex as rx
-
-
-from deathsite.blog_page import blog
-from deathsite.free_time import free_time
-from deathsite.home_page import home
-from deathsite.projects_page import projects
-from deathsite.videos_page import videos
 from pydantic import BaseModel
+
 from deathsite.videos import Youtube
 
 UMAMI_WEBSITE_ID = os.getenv("UMAMI_WEBSITE_ID", "")
@@ -66,7 +61,6 @@ NAV_BUTTON_STYLE = {
 }
 
 
-
 class Project(BaseModel):
     title: str
     description: str
@@ -107,7 +101,6 @@ class State(rx.State):
             self.current_yt_video = url
             self.last_yt_fetch = today
 
-    
     async def update_videos(self):
         yt_instance = Youtube()
         video_urls = yt_instance.get_last_5_yt_videos()
@@ -219,18 +212,24 @@ def page_content(content):
             "backgroundSize": "cover",
             "backgroundPosition": "center",
             "backgroundRepeat": "no-repeat",
-            "backgroundAttachment": "fixed",  
+            "backgroundAttachment": "fixed",
             "minHeight": "100vh",  # This ensures the background covers the full viewport height
         },
     )
 
+
+from deathsite.blog_page import blog
+from deathsite.free_time import free_time
+from deathsite.home_page import home
+from deathsite.projects_page import projects
+from deathsite.videos_page import videos
 
 app = rx.App(
     theme=rx.theme(
         appearance="dark",
         has_background=True,
         accent_color="violet",
-        background_color="#212529",  
+        background_color="#212529",
         text_color="#ffffff",  # Light text color
     ),
     head_components=[
