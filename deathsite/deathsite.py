@@ -4,10 +4,17 @@
 import asyncio
 import datetime
 import os
-
 import reflex as rx
 
-# constants
+
+from deathsite.blog_page import blog
+from deathsite.free_time import free_time
+from deathsite.home_page import home
+from deathsite.projects_page import projects
+from deathsite.videos_page import videos
+from pydantic import BaseModel
+from deathsite.videos import Youtube
+
 UMAMI_WEBSITE_ID = os.getenv("UMAMI_WEBSITE_ID", "")
 UMAMI_SCRIPT_URL = os.getenv("UMAMI_SCRIPT_URL", "")
 TWITCH_USERNAME = "Death916"
@@ -58,9 +65,6 @@ NAV_BUTTON_STYLE = {
     },
 }
 
-from pydantic import BaseModel
-
-from deathsite.videos import Youtube
 
 
 class Project(BaseModel):
@@ -103,7 +107,7 @@ class State(rx.State):
             self.current_yt_video = url
             self.last_yt_fetch = today
 
-    # video updater for videos page
+    
     async def update_videos(self):
         yt_instance = Youtube()
         video_urls = yt_instance.get_last_5_yt_videos()
@@ -186,7 +190,6 @@ def footer() -> rx.Component:
     )
 
 
-# (setq eldoc-echo-area-use-multiline-p nil)
 def page_content(content):
     return rx.box(
         rx.vstack(
@@ -216,7 +219,7 @@ def page_content(content):
             "backgroundSize": "cover",
             "backgroundPosition": "center",
             "backgroundRepeat": "no-repeat",
-            "backgroundAttachment": "fixed",  # This makes the background stay fixed while scrolling
+            "backgroundAttachment": "fixed",  
             "minHeight": "100vh",  # This ensures the background covers the full viewport height
         },
     )
@@ -227,7 +230,7 @@ app = rx.App(
         appearance="dark",
         has_background=True,
         accent_color="violet",
-        background_color="#212529",  # Dark background color
+        background_color="#212529",  
         text_color="#ffffff",  # Light text color
     ),
     head_components=[
@@ -243,11 +246,6 @@ app = rx.App(
     else [],
 )
 
-from deathsite.blog_page import blog
-from deathsite.free_time import free_time
-from deathsite.home_page import home
-from deathsite.projects_page import projects
-from deathsite.videos_page import videos
 
 app.add_page(home)
 app.add_page(projects)

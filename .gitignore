@@ -1,0 +1,16 @@
+*.db
+*.py[cod]
+assets/external/
+.web
+__pycache__/
+.states
+# Devenv
+.devenv*
+devenv.local.nix
+devenv.local.yaml
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
