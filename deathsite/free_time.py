@@ -1,14 +1,14 @@
 import json
+import logging
 import os
 import shutil
 
 import reflex as rx
-import logging
 
 from deathsite.deathsite import State, page_content
 
 FREE_TIME_DIR = "/mnt/myjfs/gallery/"
-ASSETS_DIR = "."  # set this to your Reflex assets dir for server use
+ASSETS_DIR = "assets"
 
 """
 manifest.json schema
@@ -33,6 +33,7 @@ logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+
 class GetFreeTime:
     def __init__(self, gallery_path=ASSETS_DIR):
         self.gallery_path = gallery_path
@@ -44,16 +45,33 @@ class GetFreeTime:
             self.gallery_items = json.load(f)
 
     def get_items(self) -> list[dict]:
+        for item in self.gallery_items:
+            item["thumbnail"] = f"/thumbs/{item['slug']}.png"
+            item["file"] = f"/{item['slug']}.html"
         logging.debug(f"get_items: {self.gallery_items}")
+        print(f"get_items: {self.gallery_items}")
         return self.gallery_items
 
     def move_to_assets(self, assets_path=FREE_TIME_DIR):
         if not assets_path:
             return
         for item in self.gallery_items:
-            src = os.path.join(self.gallery_path, item["file"])
-            dst = os.path.join(assets_path, item["file"])
-            shutil.copy(src, dst)
+            slug = item["slug"]
+            
+            src_thumb = os.path.join(self.gallery_path, "thumbs", f"{slug}.png")
+            if os.path.exists(src_thumb):
+                dst_thumb = os.path.join(assets_path, "thumbs", f"{slug}.png")
+                os.makedirs(os.path.dirname(dst_thumb), exist_ok=True)
+                print(f"copying {src_thumb} to {dst_thumb}")
+                shutil.copy(src_thumb, dst_thumb)
+
+            if item.get("type") == "html":
+                src_file = os.path.join(self.gallery_path, f"{slug}.html")
+                if os.path.exists(src_file):
+                    dst_file = os.path.join(assets_path, f"{slug}.html")
+                    os.makedirs(os.path.dirname(dst_file), exist_ok=True)
+                    print(f"copying {src_file} to {dst_file}")
+                    shutil.copy(src_file, dst_file)
 
 
 @rx.page(route="/free_time", on_load=State.load_free_time)
@@ -68,7 +86,7 @@ def free_time():
                 align="center",
             ),
             rx.flex(
-                rx.foreach(State.free_time, lambda f: rx.card(f["thumbnail"])),
+                rx.foreach(State.free_time, lambda f: rx.card(rx.image(src=f["thumbnail"]))),
             ),
         ),
     )

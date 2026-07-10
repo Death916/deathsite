@@ -1,5 +1,6 @@
 import reflex as rx
-from deathsite.deathsite import page_content, YOUTUBE_URL, State
+
+from deathsite.deathsite import YOUTUBE_URL, State, page_content
 
 
 @rx.page(route="/videos", on_load=State.update_videos)
@@ -19,14 +20,14 @@ def videos():
                     State.yt_video_list,
                     lambda video_url: rx.card(
                         rx.html(
-                            f"""<iframe 
-                                width="100%" 
+                            f"""<iframe
+                                width="100%"
                                 style="max-width: 350px;"
-                                height="200" 
-                                src="https://www.youtube.com/embed/{video_url.split("v=")[1]}" 
-                                title="YouTube video player" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                height="200"
+                                src="https://www.youtube.com/embed/{video_url.split("v=")[1]}"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
                             </iframe>"""
                         ),

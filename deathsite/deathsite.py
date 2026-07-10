@@ -82,13 +82,13 @@ class State(rx.State):
     def update_time(self):
         self.current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    @rx.event
     async def load_free_time(self):
         try:
             from deathsite.free_time import GetFreeTime
 
             self.free_time = GetFreeTime().get_items()
-        except FileNotFoundError:
+        except FileNotFoundError as e:
+            print(f"Error loading free time manifest: {e}")
             self.free_time = []
 
     def go_to_page(self, page: str):
