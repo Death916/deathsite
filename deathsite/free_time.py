@@ -98,13 +98,17 @@ def free_time():
                         rx.vstack(
                             rx.heading(f["title"], size="4"),
                             rx.card(
-                                rx.image(src=f["thumbnail"], width="350px", height="350px")
+                                rx.image(
+                                    src=f["thumbnail"], width="350px", height="350px"
+                                )
                             ),
                             rx.hstack(
                                 rx.cond(
                                     f["type"] == "html",
                                     rx.link("Open App", href=f["route"]),
-                                    rx.link("View Project", href=f["link"], is_external=True),
+                                    rx.link(
+                                        "View Project", href=f["link"], is_external=True
+                                    ),
                                 ),
                                 spacing="2",
                             ),
@@ -130,7 +134,7 @@ def view_project():
     return page_content(
         rx.hstack(
             rx.html(
-                f'<iframe src="{State.selected_project["file"]}" width="100%" height="85vh" style="border: none; border-radius: 8px;" sandbox="allow-scripts"></iframe>',
+                f'<iframe src="{State.selected_project["file"]}" width="100%" style="border: none; border-radius: 8px; height: 85vh;" sandbox="allow-scripts"></iframe>',
                 width="75%",
             ),
             rx.vstack(
@@ -144,8 +148,16 @@ def view_project():
                     ),
                     wrap="wrap",
                 ),
-                rx.link("Open App in New Tab", href=State.selected_project["file"], is_external=True),
-                rx.link("View on Forgejo", href=State.selected_project_forgejo_url, is_external=True),
+                rx.link(
+                    "Open App in New Tab",
+                    href=State.selected_project["file"],
+                    is_external=True,
+                ),
+                rx.link(
+                    "View on Forgejo",
+                    href=State.selected_project_forgejo_url,
+                    is_external=True,
+                ),
                 width="25%",
                 align_items="start",
                 spacing="4",
