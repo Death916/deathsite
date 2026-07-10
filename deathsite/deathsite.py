@@ -88,6 +88,8 @@ class State(rx.State):
 
             if os.path.exists(FREE_TIME_DIR):
                 GetFreeTime(gallery_path=FREE_TIME_DIR).move_to_assets(assets_path="assets")
+                if os.path.exists(".web/public"):
+                    GetFreeTime(gallery_path=FREE_TIME_DIR).move_to_assets(assets_path=".web/public")
 
             self.free_time = GetFreeTime().get_items()
         except FileNotFoundError as e:
