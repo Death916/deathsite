@@ -84,7 +84,10 @@ class State(rx.State):
 
     async def load_free_time(self):
         try:
-            from deathsite.free_time import GetFreeTime
+            from deathsite.free_time import GetFreeTime, FREE_TIME_DIR
+
+            if os.path.exists(FREE_TIME_DIR):
+                GetFreeTime(gallery_path=FREE_TIME_DIR).move_to_assets(assets_path="assets")
 
             self.free_time = GetFreeTime().get_items()
         except FileNotFoundError as e:
