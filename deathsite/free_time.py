@@ -48,16 +48,21 @@ class GetFreeTime:
         for item in self.gallery_items:
             item["thumbnail"] = f"/thumbs/{item['slug']}.png"
             item["file"] = f"/{item['slug']}.html"
-        logging.debug(f"get_items: {self.gallery_items}")
-        print(f"get_items: {self.gallery_items}")
+
         return self.gallery_items
 
     def move_to_assets(self, assets_path=FREE_TIME_DIR):
         if not assets_path:
             return
+
+        dst_manifest = os.path.join(assets_path, "manifest.json")
+        os.makedirs(os.path.dirname(dst_manifest), exist_ok=True)
+        print(f"copying {self.manifest_path} to {dst_manifest}")
+        shutil.copy(self.manifest_path, dst_manifest)
+
         for item in self.gallery_items:
             slug = item["slug"]
-            
+
             src_thumb = os.path.join(self.gallery_path, "thumbs", f"{slug}.png")
             if os.path.exists(src_thumb):
                 dst_thumb = os.path.join(assets_path, "thumbs", f"{slug}.png")
@@ -82,11 +87,38 @@ def free_time():
                 "Sometimes I give my agents some 'Free Time' this is what they come up with",
                 size="5",
                 color="#ff2020",
-                justify="center",
-                align="center",
+                width="100%",
+                text_align="center",
             ),
             rx.flex(
-                rx.foreach(State.free_time, lambda f: rx.card(rx.image(src=f["thumbnail"]))),
+                rx.foreach(
+                    State.free_time,
+                    lambda f: rx.card(
+                        rx.vstack(
+                            rx.heading(f["title"], size="4"),
+                            rx.card(
+                                rx.image(src=f["thumbnail"], width="350px", height="350px")
+                            ),
+                            rx.hstack(
+                                rx.cond(
+                                    f["type"] == "html",
+                                    rx.link("Open App", href=f["file"], is_external=True),
+                                    rx.link("View Project", href=f["link"], is_external=True),
+                                ),
+                                spacing="2",
+                            ),
+                            align_items="center",
+                            spacing="2",
+                        ),
+                        size="2",
+                    ),
+                ),
+                direction="row",
+                wrap="wrap",
+                spacing="4",
+                justify="center",
+                align="start",
+                width="100%",
             ),
         ),
     )
