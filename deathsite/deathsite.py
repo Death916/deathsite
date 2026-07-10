@@ -108,6 +108,15 @@ class State(rx.State):
     def selected_project_tags(self) -> list[str]:
         return self.selected_project.get("tags", [])
 
+    @rx.var
+    def selected_project_forgejo_url(self) -> str:
+        if "link" in self.selected_project and self.selected_project["link"]:
+            return self.selected_project["link"]
+        slug = self.selected_project.get("slug", "")
+        if not slug:
+            return ""
+        return f"https://git.death916.xyz/death916/freetime/src/branch/main/projects/{slug}"
+
     def go_to_page(self, page: str):
         self.current_page = page
 

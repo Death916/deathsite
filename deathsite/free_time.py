@@ -145,6 +145,7 @@ def view_project():
                     wrap="wrap",
                 ),
                 rx.link("Open App in New Tab", href=State.selected_project["file"], is_external=True),
+                rx.link("View on Forgejo", href=State.selected_project_forgejo_url, is_external=True),
                 width="25%",
                 align_items="start",
                 spacing="4",
