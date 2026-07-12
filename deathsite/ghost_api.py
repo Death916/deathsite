@@ -8,8 +8,14 @@ class GhostBlog:
         keys_path = os.getenv(
             "KEYS_PATH", os.path.join(os.path.dirname(__file__), "keys.json")
         )
-        with open(keys_path) as k:
-            keys = json.load(k)
+        try:
+            with open(keys_path) as k:
+                keys = json.load(k)
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print(f"Error loading keys.json: {e}")
+            self.blog_url = "https://blog.death916.xyz"
+            self.api_key = ""
+            return
         self.blog_url = keys.get("ghost_blog_url", "https://blog.death916.xyz")
         self.api_key = keys.get("ghost_content_api_key", "")
 
