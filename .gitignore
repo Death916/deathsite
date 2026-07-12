@@ -8,7 +8,7 @@ __pycache__/
 .devenv*
 devenv.local.nix
 devenv.local.yaml
-
+keys.json
 
 # direnv
 .direnv
