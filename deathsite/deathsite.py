@@ -9,6 +9,7 @@ import reflex as rx
 from pydantic import BaseModel
 
 from deathsite.videos import Youtube
+from deathsite.ghost_api import GhostBlog
 
 UMAMI_WEBSITE_ID = os.getenv("UMAMI_WEBSITE_ID", "")
 UMAMI_SCRIPT_URL = os.getenv("UMAMI_SCRIPT_URL", "")
@@ -20,6 +21,7 @@ TWITCH_CHAT_URL = (
 )
 TWITCH_EMBED_URL = f"https://player.twitch.tv/?channel={TWITCH_USERNAME}&parent=death916.xyz&muted=true"
 GITHUB_URL = "https://github.com/Death916"
+GHOST_BLOG_URL = os.getenv("GHOST_BLOG_URL", "https://blog.death916.xyz")
 PROJECTS_DATA = [
     {
         "title": "Death916's Site",
@@ -78,6 +80,7 @@ class State(rx.State):
     last_yt_fetch: str = ""
     yt_video_list: list[str] = []
     free_time: list[dict] = []
+    blog_posts: list[dict] = []
 
     def update_time(self):
         self.current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -127,6 +130,10 @@ class State(rx.State):
         video_urls = yt_instance.get_last_5_yt_videos()
         self.yt_video_list = video_urls
         # look into rx.background for background updates
+
+    async def update_blog_posts(self):
+        ghost = GhostBlog()
+        self.blog_posts = ghost.get_posts()
 
     def get_youtube_embed_url(self, watch_url: str) -> str:
         """Converts a YouTube watch URL to an embed URL."""

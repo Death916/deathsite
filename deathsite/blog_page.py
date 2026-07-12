@@ -1,8 +1,8 @@
 import reflex as rx
-from deathsite.deathsite import page_content
+from deathsite.deathsite import State, page_content
 
 
-@rx.page(route="/blog")
+@rx.page(route="/blog", on_load=State.update_blog_posts)
 def blog():
     return page_content(
         rx.vstack(
@@ -12,22 +12,40 @@ def blog():
                 color="#ffffff",
             ),
             rx.scroll_area(
-                rx.flex(
-                    rx.markdown(
-                        """# April 19 2025
-
-Been using a new IRC client called Halloy. Its written in rust and has a very nice interface. Its pretty much my go to now.
-
-Its made me want to get my rust skills back up again and drop some contributions. Heres the link to the project: [Halloy](https://github.com/squidowl/halloy)
-
-# April 05 2025
-
-## Starting this site
-
-I wanted to finally have a central place for all my doings. Figured now was the time to get a personal site going when I saw the reflex framework for python. I really didnt like always having to drop to JS or something for web"""
+                rx.foreach(
+                    State.blog_posts,
+                    lambda post: rx.link(
+                        rx.card(
+                            rx.vstack(
+                                rx.text(
+                                    post["published_at"],
+                                    color="#6c757d",
+                                    font_size="0.85em",
+                                ),
+                                rx.heading(
+                                    post["title"],
+                                    size="4",
+                                    color="#ffffff",
+                                ),
+                                rx.cond(
+                                    post["excerpt"],
+                                    rx.text(
+                                        post["excerpt"],
+                                        color="#adb5bd",
+                                        font_size="0.9em",
+                                    ),
+                                ),
+                                spacing="1",
+                            ),
+                            width="100%",
+                            bg="rgba(255,255,255,0.05)",
+                            _hover={"bg": "rgba(255,255,255,0.1)"},
+                        ),
+                        href=post["url"],
+                        is_external=True,
+                        text_decoration="none",
+                        width="100%",
                     ),
-                    direction="column",
-                    spacing="4",
                 ),
                 type="always",
                 scrollbars="vertical",
