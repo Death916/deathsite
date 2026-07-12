@@ -39,6 +39,36 @@ PROJECTS_DATA = [
             "Printer": "https://amzn.to/3S7pDme",
         },
     },
+    {
+        "title": "emailtrade",
+        "description": "Automatically buy/sell crypto from TradingView alert email",
+        "status": "Paused",
+        "link": "https://github.com/Death916/emailtrade",
+    },
+    {
+        "title": "mining_diff_scraper",
+        "description": "Gets historical mining difficulty, nethash and other relevant data for crypto currencies",
+        "status": "Completed",
+        "link": "https://github.com/Death916/mining_diff_scraper",
+    },
+    {
+        "title": "c2cscrape",
+        "description": "Scrape archived episodes of c2c and create local feed for use in podcast app",
+        "status": "Completed",
+        "link": "https://github.com/Death916/c2cscrape",
+    },
+    {
+        "title": "combo",
+        "description": "IRC bot to call people out for monologue",
+        "status": "Completed",
+        "link": "https://github.com/Death916/combo",
+    },
+    {
+        "title": "minestart",
+        "description": "Automatically start crypto miner on PC startup and stop when games are opened",
+        "status": "Completed",
+        "link": "https://github.com/Death916/minestart",
+    },
     # {
     #    "title": "Death916's Guild",
     #     "description": "My guild page.",
